@@ -28,7 +28,7 @@ producer = KafkaProducer(
     key_serializer=lambda v: json.dumps(v).encode('utf-8')
 )
 
-# Назва топіку
+# Назви топіків
 my_name = "vitalii_vasylets"
 topic__building_sensors_name = f'{my_name}_building_sensors'
 topic_temperature_alerts_name = f'{my_name}_temperature_alerts'
@@ -54,7 +54,7 @@ def process_message(message):
         if humidity < 20 or humidity > 80:
             alert_data = {
                 **data,
-                "message": f"Humidity {humidity} exceeds 80% or reaches less than 20%"
+                "message": f"Humidity {humidity} outside the range of 20% to 80%"
             }
             producer.send(topic_humidity_alerts_name, key=str(uuid.uuid4()), value=alert_data)
             producer.flush()
