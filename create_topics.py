@@ -11,8 +11,12 @@ admin_client = KafkaAdminClient(
 )
 
 # Визначення нових топіків
-my_name = "Vitalii_vasylets"
-topic_names = [f'{my_name}_building_sensors',f'{my_name}_temperature_alerts',f'{my_name}_humidity_alerts']
+my_name = "vitalii_vasylets"
+topic_names = [
+    f'{my_name}_building_sensors',
+    f'{my_name}_temperature_alerts',
+    f'{my_name}_humidity_alerts'
+]
 num_partitions = 2
 replication_factor = 1
 
@@ -27,8 +31,11 @@ try:
 except Exception as e:
     print(f"An error occurred: {e}")
 
-# Перевіряємо список існуючих топіків 
-print(admin_client.list_topics())
+# Перевіряємо чи є наші топіки в списку існуючих топіків 
+print('Мої топіки:')
+for topic in admin_client.list_topics():
+    if my_name in topic:
+        print(topic)
 
 # Закриття зв'язку з клієнтом
 admin_client.close()
